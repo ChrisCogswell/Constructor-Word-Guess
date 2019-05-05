@@ -1,0 +1,23 @@
+{
+  "name": "Constructor-Word-Guess",
+  "version": "1.0.0",
+  "description": "Node command line word guessing game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisCogswell/Constructor-Word-Guess.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisCogswell/Constructor-Word-Guess/issues"
+  },
+  "homepage": "https://github.com/ChrisCogswell/Constructor-Word-Guess#readme",
+  "dependencies": {
+    "inquirer": "^6.3.1"
+  }
+}
