@@ -47,4 +47,48 @@ var requireNewChoice = false;
 var incorrectLetters = [];
 var correctLetters = [];
 
+var guessesLeft = 10;
+
+function Game(){
+    if (requireNewChoice){
+        var randomChoice = Math.floor(Math.random() * movieArray.length);
+        var randomMovie = movieArray[randomChoice];
+
+         computerChoice = new Word(randomMovie);
+         requireNewChoice = false;
+    }
+
+    var completedWord = [];
+
+    if (completedWord.includes(false)) {
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Choose a letter",
+                name: "userInput"
+            }
+        ]).then(function(input){
+            if (!letterArray.includes(input.userinput) || input.userinput.length > 1){
+                console.log("\nGuess Again\n");
+                Game();
+            } else {
+                if (incorrectLetters.includes(input.userinput) || correctLetters.includes(input.userinput) ||
+                    input.userinput === "") {
+                        console.log("\nThat letter was already guessed\n");
+                        Game();
+                    } else {
+                        var wordCheckArray = [];
+
+                        computerChoice.userGuess(input.userinput);
+                        computerChoice.objArray.forEach(wordCheck);
+
+                    }
+            }
+            
+        })
+    } else {
+        console.log("You Win!\n");
+    }
+}
+
 console.log(randomMovie);
