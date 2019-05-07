@@ -15,6 +15,20 @@ var Letter = function(value){
             }
         }
     };
-
     
+    this.myGuess = function(myGuess) {
+        if (myGuess === this.letter) {
+            this.guess = true;
+        }
+    };
+
 }
+
+
+
+var letter = new Letter("b");
+var myGuess = "b";
+console.log(letter);
+console.log(myGuess);
+
+module.exports = Letter;
