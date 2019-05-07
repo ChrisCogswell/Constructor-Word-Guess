@@ -26,9 +26,9 @@ var Letter = function(value){
 
 
 
-var letter = new Letter("b");
-var myGuess = "b";
-console.log(letter);
-console.log(myGuess);
+// var letter = new Letter("b");
+// var myGuess = "b";
+// console.log(letter);
+// console.log(myGuess);
 
 module.exports = Letter;
