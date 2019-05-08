@@ -4,38 +4,38 @@ var inquirer = require("inquirer");
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
 
 var movieArray = [
-    "Taxi Driver",
-    "Raging Bull",
-    "Casino",
-    "Goodfellas",
-    "The Departed",
-    "Shutter Island",
-    "The Aviator",
-    "The Wolf of Wall Street",
-    "Gangs of New York",
-    "Resevoir Dogs",
-    "Pulp Fiction",
-    "Jackie Brown",
-    "Kill Bill",
-    "Django Unchained",
-    "Jaws",
-    "Saving Private Ryan",
-    "Schindlers List",
-    "Raiders of the Lost Ark",
-    "Jurassic Park",
-    "The Goonies",
-    "Catch Me If You Can",
-    "Minority Report",
-    "Back to the Future",
-    "Blade Runner",
-    "The Terminator",
-    "Halloween",
-    "The Exorcist",
-    "Dazed and Confused",
-    "Friday",
-    "Fast Times at Ridgemont High",
-    "Pirates of the Carribean",
-    "The Empire Strikes Back"
+    "taxi driver",
+    "raging bull",
+    "casino",
+    "goodfellas",
+    "the departed",
+    "shutter island",
+    "the aviator",
+    "the wolf of wall street",
+    "gangs of new york",
+    "resevoir dogs",
+    "pulp fiction",
+    "jackie brown",
+    "kill bill",
+    "django unchained",
+    "jaws",
+    "saving private ryan",
+    "schindlers list",
+    "raiders of the lost ark",
+    "jurassic park",
+    "the goonies",
+    "catch me if you can",
+    "minority report",
+    "back to the future",
+    "blade runner",
+    "the terminator",
+    "halloween",
+    "the exorcist",
+    "dazed and confused",
+    "friday",
+    "fast times at ridgemont high",
+    "pirates of the carribean",
+    "the empire strikes back"
 ];
 
 var randomChoice = Math.floor(Math.random() * movieArray.length);
@@ -81,14 +81,64 @@ function Game(){
 
                         computerChoice.userGuess(input.userinput);
                         computerChoice.objArray.forEach(wordCheck);
+                        if (wordCheckArray.join("") === completedWord.join("")) {
+                            console.log("\nIncorrect\n");
+
+                            incorrectLetters.push(input.userinput);
+                            guessesLeft--;
+                        } else {
+                            console.log("\nCorrect\n");
+
+                            correctLetters.push(input.userinput);
+                        }
+                        computerChoice();
+
+                        console.log("Guesses Left: " + guessesLeft + "\n");
+
+                        console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
+
+                        if (guessesLeft > 0) {
+                            Game();
+                        }else {
+                            console.log("You Lose\n");
+                        }
+
+                        function wordCheck(key) {
+                            wordCheckArray.push(key.guessed);
+                        }
 
                     }
             }
             
-        })
+        });
     } else {
         console.log("You Win!\n");
     }
+
+    function checkCompleted(key) {
+        completedWord.push(key.guessed)
+    }
+}
+function gameRestart(){
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "Would you like to:",
+            choices: ["Play Again?", "Exit?"],
+            name: "restart"
+        }
+    ]).then(function(input){
+        if (input.restart === "Play Again?"){
+            requireNewChoice = true;
+            incorrectLetters = [];
+            correctLetters = [];
+            guessesLeft = 10;
+            Game();
+        } else {
+            return;
+        }
+    });
 }
 
+Game();
 console.log(randomMovie);

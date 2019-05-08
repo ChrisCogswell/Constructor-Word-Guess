@@ -23,6 +23,6 @@ function Word (answer) {
     };
 }
 
-console.log("Is this working?");
+// console.log("Is this working?");
 
 module.exports = Word;
