@@ -26,7 +26,13 @@ var movieArray = [
     "jackie brown",
     "kill bill",
     "django unchained",
+    "inglourious basterds",
+    "the hateful eight",
     "jaws",
+    "apocalypse now",
+    "there will be blood",
+    "chinatown",
+    "lawrence of arabia",
     "saving private ryan",
     "schindlers list",
     "raiders of the lost ark",
@@ -51,6 +57,7 @@ var movieArray = [
     "the fly",
     "a fistful of dollars",
     "unforgiven",
+    "the revenant",
     "the thing",
     "big trouble in little china",
     "dazed and confused",
@@ -59,6 +66,7 @@ var movieArray = [
     "trading places",
     "beverly hills cop",
     "ghostbusters",
+    "beetlejuice",
     "top gun",
     "batman",
     "the last dragon",
@@ -95,7 +103,7 @@ function Game(){
         inquirer.prompt([
             {
                 type: "input",
-                message: "Choose a letter",
+                message: "Guess the Movie Title! Pick a letter to begin.",
                 name: "userinput"
             }
         ]).then(function(input){
