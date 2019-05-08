@@ -38,40 +38,42 @@ var movieArray = [
     "the empire strikes back"
 ];
 
-var randomChoice = Math.floor(Math.random() * movieArray.length);
-var randomMovie = movieArray[randomChoice];
+var randomIndex = Math.floor(Math.random() * movieArray.length);
+var randomWord = movieArray[randomIndex];
 
-var computerChoice = new Word(randomMovie);
+var computerWord = new Word(randomWord);
 
-var requireNewChoice = false;
+var requireNewWord = false;
 var incorrectLetters = [];
 var correctLetters = [];
 
 var guessesLeft = 10;
 
 function Game(){
-    if (requireNewChoice){
-        var randomChoice = Math.floor(Math.random() * movieArray.length);
-        var randomMovie = movieArray[randomChoice];
+    if (requireNewWord){
+        var randomIndex = Math.floor(Math.random() * movieArray.length);
+        var randomWord = movieArray[randomIndex];
 
-         computerChoice = new Word(randomMovie);
-         requireNewChoice = false;
+         computerWord = new Word(randomWord);
+         requireNewWord = false;
     }
 
-    var completedWord = [];
+    var wordComplete = [];
+    computerWord.objArray.forEach(completeCheck);
 
-    if (completedWord.includes(false)) {
+    if (wordComplete.includes(false)) {
         inquirer.prompt([
             {
                 type: "input",
                 message: "Choose a letter",
-                name: "userInput"
+                name: "userinput"
             }
         ]).then(function(input){
             if (!letterArray.includes(input.userinput) || input.userinput.length > 1){
                 console.log("\nGuess Again\n");
                 Game();
-            } else {
+            } 
+            else {
                 if (incorrectLetters.includes(input.userinput) || correctLetters.includes(input.userinput) ||
                     input.userinput === "") {
                         console.log("\nThat letter was already guessed\n");
@@ -79,9 +81,11 @@ function Game(){
                     } else {
                         var wordCheckArray = [];
 
-                        computerChoice.userGuess(input.userinput);
-                        computerChoice.objArray.forEach(wordCheck);
-                        if (wordCheckArray.join("") === completedWord.join("")) {
+                        computerWord.userGuess(input.userinput);
+
+                        computerWord.objArray.forEach(wordCheck);
+
+                        if (wordCheckArray.join('') === wordComplete.join('')) {
                             console.log("\nIncorrect\n");
 
                             incorrectLetters.push(input.userinput);
@@ -91,7 +95,7 @@ function Game(){
 
                             correctLetters.push(input.userinput);
                         }
-                        computerChoice();
+                        computerWord.log();
 
                         console.log("Guesses Left: " + guessesLeft + "\n");
 
@@ -101,25 +105,29 @@ function Game(){
                             Game();
                         }else {
                             console.log("You Lose\n");
+                            restartGame();
                         }
 
                         function wordCheck(key) {
                             wordCheckArray.push(key.guessed);
-                        }
-
                     }
+
+                }
             }
             
-        });
+        })
     } else {
         console.log("You Win!\n");
+        restartGame();
     }
 
-    function checkCompleted(key) {
-        completedWord.push(key.guessed)
+    function completeCheck(key) {
+        wordComplete.push(key.guessed)
     }
+
+// restartGame()
 }
-function gameRestart(){
+function restartGame(){
     inquirer.prompt([
         {
             type: "list",
@@ -129,16 +137,15 @@ function gameRestart(){
         }
     ]).then(function(input){
         if (input.restart === "Play Again?"){
-            requireNewChoice = true;
+            requireNewWord = true;
             incorrectLetters = [];
             correctLetters = [];
             guessesLeft = 10;
             Game();
         } else {
-            return;
+            return
         }
-    });
+    })
 }
 
 Game();
-console.log(randomMovie);

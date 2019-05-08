@@ -20,7 +20,7 @@ function Word (answer) {
         for(var i = 0; i < this.objArray.length; i++){
             this.objArray[i].guess(input);
         }
-    };
+    }
 }
 
 // console.log("Is this working?");

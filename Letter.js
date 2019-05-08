@@ -1,14 +1,14 @@
 // var inquirer = require("inquirer");
 
-var Letter = function(value){
+function Letter(value) {
     this.letter = value;
-    this.guess = false;
+    this.guessed = false;
     this.toString = function(){
         if(this.letter === " ") {
-            this.guess = true;
+            this.guessed = true;
             return " ";
         } else {
-            if (this.guess === false){
+            if (this.guessed === false){
                 return "_";
             } else {
                 return this.letter;
@@ -16,11 +16,11 @@ var Letter = function(value){
         }
     };
     
-    this.myGuess = function(myGuess) {
-        if (myGuess === this.letter) {
-            this.guess = true;
+    this.guess = function(guess) {
+        if (guess === this.letter) {
+            this.guessed = true;
         }
-    };
+    }
 
 }
 
