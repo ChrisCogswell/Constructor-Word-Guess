@@ -1,7 +1,15 @@
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
 
+// Letters to choose from and the words to be guessed. Arrays to catch user guesses.
+
 var letterArray = "abcdefghijklmnopqrstuvwxyz";
+
+var incorrectLetters = [];
+var correctLetters = [];
+
+var guessesLeft = 7;
+
 
 var movieArray = [
     "taxi driver",
@@ -29,39 +37,61 @@ var movieArray = [
     "back to the future",
     "blade runner",
     "the terminator",
+    "the godfather",
+    "scarface",
+    "inception",
+    "interstellar",
+    "the prestige",
     "halloween",
+    "psycho",
+    "the shawshank redemption",
     "the exorcist",
+    "the shining",
+    "alien",
+    "the fly",
+    "a fistful of dollars",
+    "unforgiven",
+    "the thing",
+    "big trouble in little china",
     "dazed and confused",
     "friday",
+    "the karate kid",
+    "trading places",
+    "beverly hills cop",
+    "ghostbusters",
+    "top gun",
+    "batman",
+    "the last dragon",
     "fast times at ridgemont high",
     "pirates of the carribean",
     "the empire strikes back"
 ];
 
-var randomIndex = Math.floor(Math.random() * movieArray.length);
-var randomWord = movieArray[randomIndex];
+// Random word generator
 
-var computerWord = new Word(randomWord);
+var randomIndex = Math.floor(Math.random() * movieArray.length);
+var randomMovie = movieArray[randomIndex];
+
+var computerChoice = new Word(randomMovie);
 
 var requireNewWord = false;
-var incorrectLetters = [];
-var correctLetters = [];
 
-var guessesLeft = 10;
+// Main function that runs the game. Uses inquirer for user input and checks the letters guessed against letters
+// in the random word. Runs restart function upon winning or losing.
 
 function Game(){
     if (requireNewWord){
         var randomIndex = Math.floor(Math.random() * movieArray.length);
-        var randomWord = movieArray[randomIndex];
+        var randomMovie = movieArray[randomIndex];
 
-         computerWord = new Word(randomWord);
+         computerChoice = new Word(randomMovie);
          requireNewWord = false;
     }
 
-    var wordComplete = [];
-    computerWord.objArray.forEach(completeCheck);
+    var completedWord = [];
+    computerChoice.objArray.forEach(completeCheck);
 
-    if (wordComplete.includes(false)) {
+    if (completedWord.includes(false)) {
         inquirer.prompt([
             {
                 type: "input",
@@ -81,34 +111,37 @@ function Game(){
                     } else {
                         var wordCheckArray = [];
 
-                        computerWord.userGuess(input.userinput);
+                        computerChoice.userGuess(input.userinput);
 
-                        computerWord.objArray.forEach(wordCheck);
+                        computerChoice.objArray.forEach(wordCheck);
 
-                        if (wordCheckArray.join('') === wordComplete.join('')) {
+                        if (wordCheckArray.join('') === completedWord.join('')) {
                             console.log("\nIncorrect\n");
 
                             incorrectLetters.push(input.userinput);
                             guessesLeft--;
+
                         } else {
                             console.log("\nCorrect\n");
 
                             correctLetters.push(input.userinput);
                         }
-                        computerWord.log();
 
-                        console.log("Guesses Left: " + guessesLeft + "\n");
+                        computerChoice.log();
 
-                        console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
+                            console.log("Guesses Left: " + guessesLeft + "\n");
+
+                            console.log("Letters Guessed: " + incorrectLetters.join(" ") + "\n");
 
                         if (guessesLeft > 0) {
                             Game();
-                        }else {
-                            console.log("You Lose\n");
+
+                        } else {
+                            console.log("You Lose....You needed a bigger boat\n");
                             restartGame();
                         }
 
-                        function wordCheck(key) {
+                            function wordCheck(key) {
                             wordCheckArray.push(key.guessed);
                     }
 
@@ -117,16 +150,18 @@ function Game(){
             
         })
     } else {
-        console.log("You Win!\n");
+        console.log("You Win!....You're the best around and nothing's gonna ever keep you down!\n");
         restartGame();
     }
 
     function completeCheck(key) {
-        wordComplete.push(key.guessed)
+        completedWord.push(key.guessed)
     }
 
-// restartGame()
 }
+
+// Function to restart the game upon winning or losing
+
 function restartGame(){
     inquirer.prompt([
         {
@@ -147,5 +182,7 @@ function restartGame(){
         }
     })
 }
+
+// Main function call for running the game
 
 Game();
