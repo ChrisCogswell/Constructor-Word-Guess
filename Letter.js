@@ -29,6 +29,6 @@ function Letter(value) {
 // var letter = new Letter("b");
 // var myGuess = "b";
 // console.log(letter);
-// console.log(myGuess);
+// console.log(guess);
 
 module.exports = Letter;
